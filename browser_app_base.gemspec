@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
 
   spec.summary = "browser app base"
   spec.description = "browser application template"
-  spec.homepage = "https://github.com/sample/"
+  spec.homepage = "https://github.com/kuwayama1971/BrowserAppBase"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.4.0")
 
   #spec.metadata["allowed_push_host"] = "http://mygemserver.com"
