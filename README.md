@@ -22,13 +22,19 @@ Or install it yourself as:
 
 ## Usage
 
-Usage: create_browser_app [options]
-    -d, --dir dir_name               application directory
-    -h, --help                       command help
+    create_browser_app [options]
+     -d, --dir dir_name               application directory
+     -h, --help                       command help
 
-$ create_browser_app -d ~/test/
-$ cd ~/test/app
-$ ruby start.rb
+
+create app templat
+
+    $ create_browser_app -d ~/test/
+
+start application
+
+    $ cd ~/test/app
+    $ ruby start.rb
 
 ## Development
 
