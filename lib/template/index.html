@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>RubyAppBase</title>
+  <!-- jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- jQuery UI -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+
+  <script src="http://localhost:61820/js/main.js"></script>
+  <link rel="stylesheet" href="http://localhost:61820/css/index.css" type="text/css">
+</head>
+
+<body>
+  <h3>サンプル</h3>
+  <hr>
+  <table>
+    <tr>
+      <td>
+        <input type="button" id="exec" name="exec" value="実行">
+      </td>
+      <td>
+        <input type="button" id="stop" name="stop" value="停止">
+      </td>
+    </tr>
+  </table>
+  <input class="inarea" type="text" value="ファイル名を入力" name="search_str" id="search_str">
+  <input class="inarea" type="file" id="upFile" name="upFile" value="upFile"><br>
+  <input type="button" value="確認" onclick="dispFile()">
+
+  <textarea name="log" id="log" class="outarea"></textarea><br/>
+
+</body>
+
+</html>
