@@ -50,3 +50,28 @@ textarea.long {
     height: 50vh;
 }
 
+.ui-autocomplete {
+    max-height: 200px;
+    max-width: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 20px;
+}
+#jquery-ui-autocomplete label {
+    float: left;
+    margin-right: 0.5em;
+    color: black;
+    font-size: 15px;
+}
+
+.ui-dialog {
+	position: absolute;
+	top: 0;
+	left: 0;
+	padding: .2em;
+	outline: 0;
+}
+
+.long {
+    width: 90%;
+}

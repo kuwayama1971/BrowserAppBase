@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
-class AppMain
-  def initialize
-    @aboet = false
-  end
+require "server_app_base.rb"
 
-  def start(file)
+class MyApp < AppMainBase
+  def start(argv)
+    super
     begin
       @abort = false
-      puts file
+      puts argv
+      argv.each do |v|
+        yield v if block_given?
+      end
       while true
         yield Time.now.to_s if block_given?
         sleep 1
@@ -20,6 +22,6 @@ class AppMain
   end
 
   def stop()
-    @abort = true
+    super
   end
 end

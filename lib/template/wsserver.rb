@@ -1,5 +1,4 @@
-require "./server_app"
-$app = AppMain.new
+require "./server_app_base"
 
 class WsServer < Sinatra::Base
   $ws_list = []
@@ -15,9 +14,9 @@ class WsServer < Sinatra::Base
         ws.onmessage do |msg|
           puts msg
           if msg =~ /^exec:/
-            fname = msg.gsub(/^exec:/, "")
+            argv = msg.gsub(/^exec:/, "")
             Thread.new {
-              $app.start fname do |out|
+              $app.start(argv.split(",")) do |out|
                 ws.send(out)
               end
             }
@@ -25,6 +24,13 @@ class WsServer < Sinatra::Base
           if msg =~ /^stop/
             $app.stop
           end
+          if msg =~ /^suspend/
+            $app.suspend
+          end
+          if msg =~ /^resume/
+            $app.resume
+          end
+
           if msg == "exit"
             unless ENV["OCRA"] == "true"
               halt
