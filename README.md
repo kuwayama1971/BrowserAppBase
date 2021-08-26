@@ -24,16 +24,41 @@ Or install it yourself as:
 
     create_browser_app [options]
      -d, --dir dir_name               application directory
+     -a, --app app_name               application name
      -h, --help                       command help
 
 
-create app templat
+## Create app templat
 
-    $ create_browser_app -d ~/test/
+    $ create_browser_app -d ~/test/ -a MyApp
 
-start application
+## add application code
+    $ cd ~/test/
+    $ vi my_app.rb
 
-    $ cd ~/test/app
+```ruby
+    class MyApp < AppMainBase
+        def start(argv)
+            super
+            # add application code
+        end
+
+        def stop()
+            super
+            # add application code
+        end
+    end
+```
+
+ui application sample
+
+    index.html
+    css/index.css
+    js/main.js
+
+## Start application
+
+    $ cd ~/test/
     $ ruby start.rb
 
 ## Development

@@ -22,19 +22,19 @@ port = get_unused_port
 puts "port=#{port}"
 
 # config.ruの編集
-buf = File.read("config.ru").toutf8
+buf = File.binread("config.ru").toutf8
 buf.gsub!(/port [0-9]+/, "port #{port}")
-File.write("config.ru", buf)
+File.binwrite("config.ru", buf)
 
 # main.jsの編集
-buf = File.read("js/main.js").toutf8
+buf = File.binread("js/main.js").toutf8
 buf.gsub!(/localhost:[0-9]+\//, "localhost:#{port}/")
-File.write("js/main.js", buf)
+File.binwrite("js/main.js", buf)
 
 # index.htaの編集
-buf = File.read("index.html").toutf8
+buf = File.binread("index.html").toutf8
 buf.gsub!(/localhost:[0-9]+\//, "localhost:#{port}/")
-File.write("index.html", buf)
+File.binwrite("index.html", buf)
 
 Thread.start {
   puts "start browser"

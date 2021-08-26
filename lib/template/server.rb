@@ -16,6 +16,8 @@ class Search < Sinatra::Base
     end
     str = q_hash["path"].gsub(/\\/, "/")
     puts "str=#{str}"
+    kind = q_hash["kind"].gsub(/\\/, "/")
+    puts "kind=#{kind}"
     res = []
     str = str.gsub(/\\/, "/")
     dir = File.dirname(str)
@@ -45,6 +47,7 @@ class Search < Sinatra::Base
     Dir.glob(path, File::FNM_DOTMATCH).each do |file|
       data = {}
       next if File.basename(file) == "."
+      next if kind == "dir" and !File.directory?(file)
       data["label"] = File.expand_path(file)
       data["value"] = File.expand_path(file)
       res.push data
