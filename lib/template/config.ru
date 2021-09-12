@@ -24,6 +24,12 @@ get "/js/:name.js" do
   File.read "js/#{params[:name]}.js"
 end
 
+get "/config/*.*" do |file, ext|
+  content_type "text/json", :charset => "utf-8"
+  puts "#{file}.#{ext}"
+  File.read "config/#{file}.#{ext}"
+end
+
 map "/search" do
   run Search
 end
@@ -46,6 +52,6 @@ configure do
 
 end
 
-#\ --port 62857
+#\ --port 64141
 
 run Sinatra::Application

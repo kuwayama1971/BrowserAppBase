@@ -36,8 +36,8 @@ module BrowserAppBase
       app_file = get_app_file(app)
 
       load_app = <<"EOS"
-      require '#{app_file}'
-      $app = MyApp.new
+require '#{app_file}'
+$app = MyApp.new
 EOS
 
       File.open("#{dir}/app_load.rb", "w") do |f|

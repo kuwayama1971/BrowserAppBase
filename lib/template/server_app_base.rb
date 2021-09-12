@@ -1,9 +1,14 @@
 # -*- coding: utf-8 -*-
 class AppMainBase
   def initialize
+    @config = nil
     @aboet = false
     @exec = false
     @suspend = false
+  end
+
+  def set_config(config)
+    @config = config
   end
 
   def start(argv)

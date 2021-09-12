@@ -12,6 +12,7 @@ class MyApp < AppMainBase
       end
       while true
         yield Time.now.to_s if block_given?
+        yield @config["name1"]
         sleep 1
         break if @abort
       end

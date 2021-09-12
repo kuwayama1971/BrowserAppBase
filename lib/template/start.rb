@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 # -*- coding: utf-8 -*-
 $LOAD_PATH << File.dirname(File.expand_path(__FILE__))
 
@@ -49,8 +50,7 @@ Thread.start {
   else
     browser = json["chrome_win"]
   end
-  #browser = "\"C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe\" -app=http://localhost:#{port}"
-  browser += " -app=http://localhost:#{port}"
+  browser += " --disable-plugins --disable-extensions -app=http://localhost:#{port}"
   puts browser
   system browser
 }

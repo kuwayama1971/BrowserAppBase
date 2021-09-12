@@ -75,3 +75,25 @@ textarea.long {
 .long {
     width: 90%;
 }
+
+#setting_dialog {
+    color: #796fe9;
+	background-color: #000000;
+}
+
+.setting_name {
+    width: 200px;
+    color: #796fe9;
+	background-color: #000000;
+}
+
+.setting_value {
+    width: 300px;
+    color: #796fe9;
+	background-color: #000000;
+}
+
+.setting_checkbox {
+    color: #796fe9;
+	background-color: #000000;
+}

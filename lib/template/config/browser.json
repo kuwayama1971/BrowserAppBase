@@ -1,4 +1,4 @@
 {
-    "chrome_win": "\"C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe\"",
+    "chrome_win": "start chrome",
     "chrome_linux": "/bin/google-chrome"
 }
