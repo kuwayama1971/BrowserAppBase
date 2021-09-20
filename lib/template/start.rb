@@ -50,7 +50,7 @@ Thread.start {
   else
     browser = json["chrome_win"]
   end
-  browser += " --disable-plugins --disable-extensions -app=http://localhost:#{port}"
+  browser += " -app=http://localhost:#{port}"
   puts browser
   system browser
 }

@@ -12,6 +12,7 @@ end
 class WsServer < Sinatra::Base
   $ws_list = []
   json_config = nil
+  exec_thread = nil
   get "" do
     if !request.websocket?
       "no supported"
@@ -24,24 +25,33 @@ class WsServer < Sinatra::Base
         ws.onmessage do |msg|
           puts msg
           if msg =~ /^exec:/
-            json = JSON.parse(File.read("config/setting.json"))
-            json_config = config_json_hash(json)
-            $app.set_config(json_config)
-            argv = msg.gsub(/^exec:/, "")
-            Thread.new {
-              $app.start(argv.split(",")) do |out|
-                ws.send(out)
-              end
-            }
+            if exec_thread == nil
+              json = JSON.parse(File.read("config/setting.json"))
+              json_config = config_json_hash(json)
+              $app.set_config(json_config)
+              argv = msg.gsub(/^exec:/, "")
+              exec_thread = Thread.new {
+                $app.start(argv.split(",")) do |out|
+                  ws.send(out)
+                end
+                exec_thread = nil
+              }
+            end
           end
           if msg =~ /^stop/
-            $app.stop
+            if exec_thread
+              $app.stop
+            end
           end
           if msg =~ /^suspend/
-            $app.suspend
+            if exec_thread
+              $app.suspend
+            end
           end
           if msg =~ /^resume/
-            $app.resume
+            if exec_thread
+              $app.resume
+            end
           end
           if msg =~ /^setting:/
             json_string = msg.gsub(/^setting:/, "")

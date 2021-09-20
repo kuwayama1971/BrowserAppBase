@@ -48,7 +48,8 @@ class Search < Sinatra::Base
       data = {}
       next if File.basename(file) == "."
       next if kind == "dir" and !File.directory?(file)
-      data["label"] = File.expand_path(file)
+      data["label"] = File.basename(file)
+      data["label"] += "/" if (File.directory?(file))
       data["value"] = File.expand_path(file)
       res.push data
     end

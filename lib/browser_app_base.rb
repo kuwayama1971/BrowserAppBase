@@ -19,6 +19,18 @@ module BrowserAppBase
     return app_file_name + ".rb"
   end
 
+  def self.get_app_name(app)
+    app_name = ""
+    app.each_char do |s|
+      if s =~ /[a-z]/ and app_name.size == 0
+        app_name += s.upcase
+      else
+        app_name += s
+      end
+    end
+    return app_name
+  end
+
   def self.create(arg)
     dir = arg[:dir]
     app = arg[:app]
@@ -37,7 +49,7 @@ module BrowserAppBase
 
       load_app = <<"EOS"
 require '#{app_file}'
-$app = MyApp.new
+$app = #{get_app_name(app)}.new
 EOS
 
       File.open("#{dir}/app_load.rb", "w") do |f|
@@ -45,7 +57,10 @@ EOS
       end
 
       puts "create #{app_file}"
-      FileUtils.cp "#{dir}/my_app_sample.rb", "#{dir}/#{app_file}"
+      new_file = "#{dir}/#{app_file}"
+      FileUtils.cp("#{dir}/my_app_sample.rb", new_file)
+      buf = File.binread(new_file)
+      File.binwrite(new_file, buf.gsub(/MyApp/, get_app_name(app)))
     end
   end
 end

@@ -22,20 +22,14 @@ hr {
     padding: 5px;
     width: 95vw;
     height: 50vh;
+    overflow: auto;
 }
-
 
 .inarea {
     border: thin solid #000000;
     margin: 5px; 
     padding: 5px;
     width: 95%;
-}
-
-input {
-	background-color: #FAFAFA;
-    margin: 5px; 
-    padding: 5px;
 }
 
 input.long {
@@ -50,18 +44,22 @@ textarea.long {
     height: 50vh;
 }
 
+.ui-widget {
+    font-size: 12px;
+}
+
 .ui-autocomplete {
     max-height: 200px;
     max-width: 500px;
     overflow-y: auto;
-    overflow-x: hidden;
-    padding-right: 20px;
+    overflow-x: auto;
+    padding-right: 10px;
 }
+
 #jquery-ui-autocomplete label {
     float: left;
     margin-right: 0.5em;
     color: black;
-    font-size: 15px;
 }
 
 .ui-dialog {
@@ -96,4 +94,10 @@ textarea.long {
 .setting_checkbox {
     color: #796fe9;
 	background-color: #000000;
+}
+
+ul.log {
+    list-style-type: decimal;   
+    font-size: 10px;
+    color: #5d0a94;
 }
