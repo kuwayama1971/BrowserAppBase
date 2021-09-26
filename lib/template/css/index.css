@@ -2,6 +2,7 @@ body {
     color: #000000;
 	background-color: #cac3ec4f;
     overflow: hidden;
+    font-size: 12px;
 }
 
 hr {
@@ -49,8 +50,8 @@ textarea.long {
 }
 
 .ui-autocomplete {
-    max-height: 200px;
-    max-width: 500px;
+    max-height: 45vh;
+    max-width: 90wh;
     overflow-y: auto;
     overflow-x: auto;
     padding-right: 10px;
@@ -98,6 +99,6 @@ textarea.long {
 
 ul.log {
     list-style-type: decimal;   
-    font-size: 10px;
+    font-size: 12px;
     color: #5d0a94;
 }

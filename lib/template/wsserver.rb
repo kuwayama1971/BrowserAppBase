@@ -1,5 +1,6 @@
 require "./server_app_base"
 require "json"
+require "cgi"
 
 def config_json_hash(json)
   config = {}
@@ -31,11 +32,24 @@ class WsServer < Sinatra::Base
               $app.set_config(json_config)
               argv = msg.gsub(/^exec:/, "")
               exec_thread = Thread.new {
-                $app.start(argv.split(",")) do |out|
-                  ws.send(out)
+                begin
+                  $app.start(argv.split(",")) do |out|
+                    ws.send(out)
+                  end
+                  ws.send("app_end:normal")
+                rescue
+                  puts $!
+                  puts $@
+                  puts "app_end:err"
+                  ws.send("app_end:error")
+                ensure
+                  puts "exit thread"
+                  exec_thread = nil
                 end
-                exec_thread = nil
               }
+            else
+              puts "app_end:err"
+              ws.send("app_end:error")
             end
           end
           if msg =~ /^stop/
@@ -61,6 +75,12 @@ class WsServer < Sinatra::Base
             end
             json_config = config_json_hash(json)
             $app.set_config(json_config)
+          end
+          if msg =~ /^openfile:/
+            file = msg.gsub(/^openfile:/, "")
+            Thread.new {
+              system "#{json_config["editor"]} #{CGI.unescapeHTML(file)}"
+            }
           end
 
           if msg == "exit"

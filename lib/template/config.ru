@@ -30,6 +30,28 @@ get "/config/*.*" do |file, ext|
   File.read "config/#{file}.#{ext}"
 end
 
+get "/open_dialog" do
+  dialog_html = <<'EOS'
+  <!DOCTYPE html>
+  <html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Message Dialog</title>
+    <style type="text/css">
+    <!--
+    body {
+      color: #000000;
+      background-color: #ffffff;
+      overflow: hidden;
+      font-size: 12px;
+    }
+    -->    
+    </style>
+    </head>
+EOS
+  dialog_html += "<body>" + params["msg"] + "</body></html>"
+end
+
 map "/search" do
   run Search
 end
@@ -52,6 +74,6 @@ configure do
 
 end
 
-#\ --port 52538
+#\ --port 54068
 
 run Sinatra::Application
