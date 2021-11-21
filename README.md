@@ -61,6 +61,19 @@ ui application sample
     $ cd ~/test/
     $ ruby start.rb
 
+## browser setting
+
+    config/browser.json
+    Set the path for your Windows or Linux Chrome browser
+
+```json
+{
+    "chrome_win": "start chrome",
+    "chrome_linux": "/bin/google-chrome"
+}
+```
+
+
 ## Development
 
 To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
