@@ -5,6 +5,17 @@ class AppMainBase
     @aboet = false
     @exec = false
     @suspend = false
+    @ws = nil
+  end
+
+  def app_send(str)
+    if @ws != nil
+      @ws.send(str)
+    end
+  end
+
+  def set_ws(ws)
+    @ws = ws
   end
 
   def set_config(config)
@@ -26,6 +37,21 @@ class AppMainBase
 
   def resume()
     @suspend = false
+  end
+
+  # 履歴の保存
+  def add_history(file, history_data)
+    buf = File.read "history/#{file}"
+    data = eval(buf)
+    if data == nil
+      data = []
+    end
+    if history_data.to_s != ""
+      data.prepend history_data
+    end
+    File.open("history/#{file}", "w") do |f|
+      f.write JSON.pretty_generate data.uniq
+    end
   end
 end
 

@@ -5,10 +5,16 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Debug Local File",
+            "name": "Debug create_browser_app.rb",
             "type": "Ruby",
             "request": "launch",
-            "cwd": "${workspaceRoot}/lib/template/",
+            "program": "${workspaceRoot}/bin/create_browser_app.rb"
+        },
+        {
+            "name": "Debug start.rb",
+            "type": "Ruby",
+            "request": "launch",
+            "cwd": "${workspaceRoot}/lib/template",
             "program": "${workspaceRoot}/lib/template/start.rb"
         }
     ]

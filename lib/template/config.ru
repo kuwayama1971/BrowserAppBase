@@ -30,6 +30,21 @@ get "/config/*.*" do |file, ext|
   File.read "config/#{file}.#{ext}"
 end
 
+post "/history/*.*" do |file, ext|
+  content_type "text/json", :charset => "utf-8"
+  puts "#{file}.#{ext}"
+  p = params[:param1]
+  buf = File.read "history/#{file}.#{ext}"
+  data = eval(buf)
+  if data != nil
+    if p != ""
+      JSON.generate data.find_all { |d| d =~ Regexp.new(p) }
+    else
+      JSON.generate data
+    end
+  end
+end
+
 get "/open_dialog" do
   dialog_html = <<'EOS'
   <!DOCTYPE html>
@@ -74,6 +89,6 @@ configure do
 
 end
 
-#\ --port 53492
+#\ --port 61047
 
 run Sinatra::Application

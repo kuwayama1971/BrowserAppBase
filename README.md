@@ -73,6 +73,34 @@ ui application sample
 }
 ```
 
+## Send a message from your browser application to your ruby application
+
+Use the send_message function
+
+main.js sample
+```javascript
+$("#exec").click(function () {
+    send_message("exec:" + $("#upFile").val());
+});
+
+```
+
+## Send a message from the ruby application to the browser application
+
+Use the app_send function
+
+my_app_sample.rb sample
+```ruby
+class MyApp < AppMainBase
+  def start(argv)
+    # popup message
+    app_send("popup:message string")
+
+    # log message
+    yield "log message"
+    end
+end
+```
 
 ## Development
 

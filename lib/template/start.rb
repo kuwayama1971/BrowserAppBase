@@ -10,6 +10,35 @@ require "kconv"
 require "json"
 require "facter"
 
+# ログ出力
+module Output
+  def self.console_and_file(output_file)
+    defout = File.new(output_file, "a+")
+    class << defout
+      alias_method :write_org, :write
+
+      def puts(str)
+        STDOUT.write(str.to_s + "\n")
+        self.write_org(str.to_s + "\n")
+        self.flush
+      end
+
+      def write(str)
+        STDOUT.write(str)
+        self.write_org(str)
+        self.flush
+      end
+    end
+    $stdout = defout
+  end
+end
+
+Output.console_and_file("log.txt")
+
+# ディレクトリ移動
+dir = File.dirname(File.expand_path(__FILE__))
+FileUtils.cd dir
+
 # 空きポートを取得
 def get_unused_port
   s = TCPServer.open(0)
@@ -37,22 +66,41 @@ buf = File.binread("index.html").toutf8
 buf.gsub!(/localhost:[0-9]+\//, "localhost:#{port}/")
 File.binwrite("index.html", buf)
 
-Thread.start {
-  puts "start browser"
-  json_file = File.dirname(File.expand_path(__FILE__)) + "/config/browser.json"
-  json = JSON.parse(File.read json_file)
-  puts json
-  kernel = Facter.value(:kernel)
-  if kernel == "windows"
-    browser = json["chrome_win"]
-  elsif kernel == "Linux"
-    browser = json["chrome_linux"]
-  else
-    browser = json["chrome_win"]
-  end
-  browser += " -app=http://localhost:#{port}"
-  puts browser
-  system browser
-}
+begin
+  Thread.start {
+    puts "wait start web server"
+    while true
+      begin
+        s = TCPSocket.open("localhost", port)
+        s.close
+        break
+      rescue
+        puts $!
+        sleep 0.1
+      end
+    end
 
-Rack::Server.start
+    puts "start browser"
+    json_file = File.dirname(File.expand_path(__FILE__)) + "/config/browser.json"
+    json = JSON.parse(File.read json_file)
+    puts json
+    kernel = Facter.value(:kernel)
+    if kernel == "windows"
+      browser = json["chrome_win"]
+    elsif kernel == "Linux"
+      browser = json["chrome_linux"]
+    else
+      browser = json["chrome_win"]
+    end
+    browser += " -app=http://localhost:#{port}"
+    puts browser
+    system browser
+  }
+
+  # start web server
+  Rack::Server.start
+rescue
+  puts $!
+  puts $@
+  exit
+end
