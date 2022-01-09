@@ -8,8 +8,18 @@ require "json"
 require "./server"
 require "./wsserver"
 
+access_log = File.new("#{settings.root}/logs/sinatra.log", "a+")
+access_log.sync = true
+use Rack::CommonLogger, access_log
+
 get "/" do
   File.read("index.html")
+end
+
+get "*.html" do |file|
+  content_type "text/html", :charset => "utf-8"
+  puts "#{file}.html"
+  File.read "./#{file}.html"
 end
 
 get "/css/:name.css" do
@@ -80,7 +90,7 @@ end
 
 configure do
   set :DoNotReverseLookup, true
-  set :logging, false
+  set :logging, true
   set :default_encoding, "utf-8"
   set :server, :thin
 
@@ -89,6 +99,6 @@ configure do
 
 end
 
-#\ --port 61047
+#\ --port 59714
 
 run Sinatra::Application

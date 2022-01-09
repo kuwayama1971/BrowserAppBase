@@ -12,28 +12,42 @@ require "facter"
 
 # ログ出力
 module Output
-  def self.console_and_file(output_file)
-    defout = File.new(output_file, "a+")
+  def self.console_and_file(output_file, stdout = true)
+    begin
+      defout = File.new(output_file, "a+")
+    rescue
+      puts $!
+      puts $@
+      return nil
+    end
     class << defout
       alias_method :write_org, :write
 
+      def initialize(stdout)
+        @stdout = false
+      end
+
+      attr_accessor :stdout
+
       def puts(str)
-        STDOUT.write(str.to_s + "\n")
+        STDOUT.write(str.to_s + "\n") if @stdout
         self.write_org(str.to_s + "\n")
         self.flush
       end
 
       def write(str)
-        STDOUT.write(str)
+        STDOUT.write(str) if @stdout
         self.write_org(str)
         self.flush
       end
     end
     $stdout = defout
+    $stdout.stdout = stdout
   end
 end
 
-Output.console_and_file("log.txt")
+FileUtils.mkdir_p("logs")
+Output.console_and_file("logs/log.txt", false)
 
 # ディレクトリ移動
 dir = File.dirname(File.expand_path(__FILE__))

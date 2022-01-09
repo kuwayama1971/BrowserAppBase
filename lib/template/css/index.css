@@ -66,6 +66,15 @@ textarea.long {
     color: black;
 }
 
+.ui-autocomplete.ui-front {
+    max-height: 250px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+    /* add padding to account for vertical scrollbar */
+    z-index: 1000 !important;
+}
+
 .ui-dialog {
     position: absolute;
     top: 0;

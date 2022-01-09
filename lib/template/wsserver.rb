@@ -51,11 +51,11 @@ class WsServer < Sinatra::Base
         end
         ws.onmessage do |msg|
           puts msg
+          json = JSON.parse(File.read("config/setting.json"))
+          json_config = config_json_hash(json)
+          $app.set_config(json_config)
           if msg =~ /^exec:/
             if exec_thread == nil
-              json = JSON.parse(File.read("config/setting.json"))
-              json_config = config_json_hash(json)
-              $app.set_config(json_config)
               argv = msg.gsub(/^exec:/, "")
               exec_thread = Thread.new {
                 begin
@@ -80,6 +80,8 @@ class WsServer < Sinatra::Base
           end
           if msg =~ /^stop/
             if exec_thread
+              Thread.kill exec_thread
+              ws_send("app_end:stop")
               $app.stop
             end
           end

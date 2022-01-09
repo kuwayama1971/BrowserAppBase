@@ -40,7 +40,7 @@ class AppMainBase
   end
 
   # 履歴の保存
-  def add_history(file, history_data)
+  def add_history(file, history_data, max = 10)
     buf = File.read "history/#{file}"
     data = eval(buf)
     if data == nil
@@ -49,8 +49,9 @@ class AppMainBase
     if history_data.to_s != ""
       data.prepend history_data
     end
+    data = data.uniq[0..max - 1]
     File.open("history/#{file}", "w") do |f|
-      f.write JSON.pretty_generate data.uniq
+      f.write JSON.pretty_generate data
     end
   end
 end
