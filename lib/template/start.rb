@@ -46,12 +46,12 @@ module Output
   end
 end
 
-FileUtils.mkdir_p("logs")
-Output.console_and_file("logs/log.txt", false)
-
 # ディレクトリ移動
 dir = File.dirname(File.expand_path(__FILE__))
 FileUtils.cd dir
+
+FileUtils.mkdir_p("./logs")
+Output.console_and_file("./logs/log.txt", true)
 
 # 空きポートを取得
 def get_unused_port
@@ -76,9 +76,9 @@ buf.gsub!(/localhost:[0-9]+\//, "localhost:#{port}/")
 File.binwrite("js/main.js", buf)
 
 # index.htaの編集
-buf = File.binread("index.html").toutf8
+buf = File.binread("html/index.html").toutf8
 buf.gsub!(/localhost:[0-9]+\//, "localhost:#{port}/")
-File.binwrite("index.html", buf)
+File.binwrite("html/index.html", buf)
 
 begin
   Thread.start {

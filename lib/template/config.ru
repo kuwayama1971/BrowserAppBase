@@ -13,13 +13,12 @@ access_log.sync = true
 use Rack::CommonLogger, access_log
 
 get "/" do
-  File.read("index.html")
+  File.read("html/index.html")
 end
 
 get "*.html" do |file|
   content_type "text/html", :charset => "utf-8"
-  puts "#{file}.html"
-  File.read "./#{file}.html"
+  File.read "./html/#{file}.html"
 end
 
 get "/css/:name.css" do
@@ -99,6 +98,6 @@ configure do
 
 end
 
-#\ --port 59714
+#\ --port 55757
 
 run Sinatra::Application
