@@ -8,7 +8,10 @@ require "json"
 require "./server"
 require "./wsserver"
 
-access_log = File.new("#{settings.root}/logs/sinatra.log", "a+")
+temp_dir = ENV["temp"]
+temp_dir = "/tmp" if temp_dir == nil
+puts "temp_dir=#{temp_dir}"
+access_log = File.new("#{temp_dir}/logs/sinatra.log", "a+")
 access_log.sync = true
 use Rack::CommonLogger, access_log
 
@@ -98,6 +101,6 @@ configure do
 
 end
 
-#\ --port 55757
+#\ --port 36809
 
 run Sinatra::Application

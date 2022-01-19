@@ -58,8 +58,9 @@ ui application sample
 
 ## Start application
 
-    $ cd ~/test/
-    $ ruby start.rb
+```shell
+$ /tmp/test/bin/start_my_app.rb
+```
 
 ## browser setting
 

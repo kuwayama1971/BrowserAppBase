@@ -50,8 +50,11 @@ end
 dir = File.dirname(File.expand_path(__FILE__))
 FileUtils.cd dir
 
-FileUtils.mkdir_p("./logs")
-Output.console_and_file("./logs/log.txt", true)
+temp_dir = ENV["temp"]
+temp_dir = "/tmp" if temp_dir == nil
+puts "temp_dir=#{temp_dir}"
+FileUtils.mkdir_p("#{temp_dir}/logs")
+Output.console_and_file("#{temp_dir}/logs/app.log", true)
 
 # 空きポートを取得
 def get_unused_port
