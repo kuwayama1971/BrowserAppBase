@@ -50,11 +50,12 @@ end
 dir = File.dirname(File.expand_path(__FILE__))
 FileUtils.cd dir
 
-temp_dir = ENV["temp"]
-temp_dir = "/tmp" if temp_dir == nil
-puts "temp_dir=#{temp_dir}"
-FileUtils.mkdir_p("#{temp_dir}/logs")
-Output.console_and_file("#{temp_dir}/logs/app.log", true)
+# ディレクトリ作成
+$home_dir = ENV["HOME"] + "/" + dir.split("/")[-1] + "/"
+puts "home_dir=#{$home_dir}"
+FileUtils.mkdir_p("#{$home_dir}/logs")
+FileUtils.mkdir_p("#{$home_dir}/history")
+Output.console_and_file("#{$home_dir}/logs/app.log", true)
 
 # 空きポートを取得
 def get_unused_port
@@ -98,7 +99,7 @@ begin
     end
 
     puts "start browser"
-    json_file = File.dirname(File.expand_path(__FILE__)) + "/config/browser.json"
+    json_file = "#{$home_dir}/config/browser.json"
     json = JSON.parse(File.read json_file)
     puts json
     kernel = Facter.value(:kernel)

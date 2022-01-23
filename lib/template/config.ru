@@ -8,10 +8,7 @@ require "json"
 require "./server"
 require "./wsserver"
 
-temp_dir = ENV["temp"]
-temp_dir = "/tmp" if temp_dir == nil
-puts "temp_dir=#{temp_dir}"
-access_log = File.new("#{temp_dir}/logs/sinatra.log", "a+")
+access_log = File.new("#{$home_dir}/logs/sinatra.log", "a+")
 access_log.sync = true
 use Rack::CommonLogger, access_log
 
@@ -39,14 +36,18 @@ end
 get "/config/*.*" do |file, ext|
   content_type "text/json", :charset => "utf-8"
   puts "#{file}.#{ext}"
-  File.read "config/#{file}.#{ext}"
+  File.read "#{$home_dir}/config/#{file}.#{ext}"
 end
 
 post "/history/*.*" do |file, ext|
   content_type "text/json", :charset => "utf-8"
   puts "#{file}.#{ext}"
   p = params[:param1]
-  buf = File.read "history/#{file}.#{ext}"
+  begin
+    buf = File.read "#{$home_dir}/history/#{file}.#{ext}"
+  rescue
+    buf = ""
+  end
   data = eval(buf)
   if data != nil
     if p != ""
@@ -101,6 +102,6 @@ configure do
 
 end
 
-#\ --port 36809
+#\ --port 58656
 
 run Sinatra::Application

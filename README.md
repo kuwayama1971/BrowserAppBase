@@ -64,7 +64,7 @@ $ /tmp/test/bin/start_my_app.rb
 
 ## browser setting
 
-    config/browser.json
+    ${home}/${app_nane}/config/browser.json
     Set the path for your Windows or Linux Chrome browser
 
 ```json

@@ -41,7 +41,11 @@ class AppMainBase
 
   # 履歴の保存
   def add_history(file, history_data, max = 10)
-    buf = File.read "history/#{file}"
+    begin
+      buf = File.read "#{$home_dir}history/#{file}"
+    rescue
+      buf = ""
+    end
     data = eval(buf)
     if data == nil
       data = []
@@ -50,7 +54,7 @@ class AppMainBase
       data.prepend history_data
     end
     data = data.uniq[0..max - 1]
-    File.open("history/#{file}", "w") do |f|
+    File.open("#{$home_dir}history/#{file}", "w") do |f|
       f.write JSON.pretty_generate data
     end
   end

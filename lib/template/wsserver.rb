@@ -51,7 +51,7 @@ class WsServer < Sinatra::Base
         end
         ws.onmessage do |msg|
           puts msg
-          json = JSON.parse(File.read("config/setting.json"))
+          json = JSON.parse(File.read("#{$home_dir}/config/setting.json"))
           json_config = config_json_hash(json)
           $app.set_config(json_config)
           if msg =~ /^exec:/
@@ -98,7 +98,7 @@ class WsServer < Sinatra::Base
           if msg =~ /^setting:/
             json_string = msg.gsub(/^setting:/, "")
             json = JSON.parse(json_string)
-            File.open("config/setting.json", "w") do |w|
+            File.open("#{$home_dir}/config/setting.json", "w") do |w|
               w.puts JSON.pretty_generate(json)
             end
             json_config = config_json_hash(json)
