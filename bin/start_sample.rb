@@ -11,6 +11,7 @@ puts "home_dir=#{$home_dir}"
 Dir.mktmpdir { |tmpdir|
   outdir = tmpdir + "/" + dir.split("/")[-1]
   FileUtils.mkdir_p outdir
+  FileUtils.mkdir_p home_dir
   puts outdir
   Dir.glob("#{dir}/lib/*") do |f|
     if f =~ /config$/
