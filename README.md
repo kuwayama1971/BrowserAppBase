@@ -62,6 +62,8 @@ ui application sample
 $ /tmp/test/bin/start_my_app.rb
 ```
 
+![app](img/app.png)
+
 ## browser setting
 
     ${home}/${app_nane}/config/browser.json
@@ -102,6 +104,85 @@ class MyApp < AppMainBase
     end
 end
 ```
+
+## Application Setting 
+
+    ${home}/${app_nane}/config/setting.json
+
+
+```json
+[
+  {
+    "name": "name1",
+    "value": "value1 2 3 4",
+    "type": "input",
+    "select": "",
+    "description": "設定項目1"
+  },
+  {
+    "name": "name2",
+    "value": true,
+    "type": "checkbox",
+    "select": "",
+    "description": "有効にする場合はチェック"
+  },
+  {
+    "name": "name3",
+    "value": "2",
+    "type": "select",
+    "select": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "description": "選択項目"
+  },
+  {
+    "name": "name4",
+    "value": "value4",
+    "type": "input",
+    "select": "",
+    "description": "設定項目4"
+  },
+  {
+    "name": "name5",
+    "value": "value5",
+    "type": "input",
+    "select": "",
+    "description": "設定項目5"
+  },
+  {
+    "name": "name6",
+    "value": "value6",
+    "type": "input",
+    "select": "",
+    "description": "設定項目6"
+  }
+]
+```
+```ruby
+class MyApp < AppMainBase
+  def start(argv)
+    # popup message
+    app_send("popup:message string")
+
+    # log message
+    yield "log message"
+    end
+
+    # read setting
+    puts @config["name1"]
+end
+```
+
+Setting menu
+![app](img/setting_menu.png)
+
+
+Setting screen
+![app](img/setting.png)
 
 ## Development
 
