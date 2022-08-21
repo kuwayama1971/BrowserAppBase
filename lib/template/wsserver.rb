@@ -97,12 +97,17 @@ class WsServer < Sinatra::Base
           end
           if msg =~ /^setting:/
             json_string = msg.gsub(/^setting:/, "")
-            json = JSON.parse(json_string)
-            File.open("#{$home_dir}/config/setting.json", "w") do |w|
-              w.puts JSON.pretty_generate(json)
+            begin
+              json = JSON.parse(json_string)
+              File.open("#{$home_dir}/config/setting.json", "w") do |w|
+                w.puts JSON.pretty_generate(json)
+              end
+              json_config = config_json_hash(json)
+              $app.set_config(json_config)
+            rescue
+              # jsonファイルではない
+              ws_send("app_end:error")
             end
-            json_config = config_json_hash(json)
-            $app.set_config(json_config)
           end
           if msg =~ /^openfile:/
             file = msg.gsub(/^openfile:/, "")

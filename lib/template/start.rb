@@ -51,7 +51,13 @@ dir = File.dirname(File.expand_path(__FILE__))
 FileUtils.cd dir
 
 # ディレクトリ作成
-$home_dir = ENV["HOME"] + "/" + dir.split("/")[-1] + "/"
+pp ARGV
+if ARGV[0] == "test"
+  $home_dir = "./"
+  ARGV = []
+else
+  $home_dir = ENV["HOME"] + "/" + dir.split("/")[-1] + "/"
+end
 puts "home_dir=#{$home_dir}"
 FileUtils.mkdir_p("#{$home_dir}/logs")
 FileUtils.mkdir_p("#{$home_dir}/history")

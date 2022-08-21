@@ -11,8 +11,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 
-  <script src="http://localhost:58656/js/main.js"></script>
-  <link rel="stylesheet" href="http://localhost:58656/css/index.css" type="text/css">
+  <script src="js/main.js"></script>
+  <link rel="stylesheet" href="css/index.css" type="text/css">
 </head>
 
 <body>
@@ -21,22 +21,34 @@
   </div>
   <h4>RubyAppBase</h4>
   <hr>
-  <table>
-    <tr>
-      <td>
-        <input type="button" id="exec" name="exec" value="実行">
-      </td>
-      <td>
-        <input type="button" id="stop" name="stop" value="停止">
-      </td>
-      <td>
-        <div id="setting_dialog" style="display:none;">
-          <dl id="wrap"></dl>
-        </div>
-        <input type="button" id="setting" value="設定" />
-      </td>
-    </tr>
-  </table>
+  <!-- menu -->
+  <div id="setting_dialog" style="display:none;">
+    <dl id="wrap"></dl>
+  </div>
+  <div>
+    <ul class="menu">
+      <Li><a href="#" id="exec" name="exec">実行</a></li>
+      <li><a href="#" id="stop" name="stop">停止</a></li>
+      <li>
+        設定
+        <ul class="menuSub">
+          <li><a href="#" id="setting">設定</a></li>
+          <li><a href="#" id="save_setting">設定保存</a></li>
+          <li><a href="#" id="load_setting">設定読み込み</a></li>
+        </ul>
+      </li>
+      <!--
+      <li>
+        menu3
+        <ul class="menuSub">
+          <li><a href="#">menu3-1</a></li>
+          <li><a href="#">menu3-2</a></li>
+          <li><a href="#">menu3-3</a></li>
+        </ul>
+      </li>
+      -->
+    </ul>
+  </div>
 
   <div id="dialog1" style="display:none;">
     <input class="inarea" type="search" name="search_str" id="search_str">

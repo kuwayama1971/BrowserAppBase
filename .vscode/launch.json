@@ -15,6 +15,7 @@
             "type": "Ruby",
             "request": "launch",
             "cwd": "${workspaceRoot}/lib/template",
+            "args": [ "test" ],
             "program": "${workspaceRoot}/lib/template/start.rb"
         }
     ]
