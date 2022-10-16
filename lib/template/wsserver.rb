@@ -5,7 +5,7 @@ require "thread"
 
 def config_json_hash(json)
   config = {}
-  json.each do |j|
+  json["setting_list"].each do |j|
     config[j["name"]] = j["value"]
   end
   return config

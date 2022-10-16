@@ -3,10 +3,11 @@
 require "fileutils"
 require "facter"
 require "tmpdir"
+require "json"
 
 # tmpdirディレクトリにコピー
 dir = File.dirname(File.expand_path(__FILE__ + "/../"))
-home_dir = ENV["HOME"] + "/" + dir.split("/")[-1]
+home_dir = ENV["HOME"] + "/" + dir.split("/")[-1].gsub(/-[0-9\.-]+/,"")
 puts "home_dir=#{$home_dir}"
 Dir.mktmpdir { |tmpdir|
   outdir = tmpdir + "/" + dir.split("/")[-1]
@@ -24,6 +25,14 @@ Dir.mktmpdir { |tmpdir|
       puts "#{f} => #{outdir}/"
       FileUtils.cp_r f, "#{outdir}/"
     end
+  end
+  json = JSON.parse(File.read("#{$home_dir}/config/setting.json"))
+  old_version = json["version"]
+  json = JSON.parse(File.read("#{$dir}/config/setting.json"))
+  new_version = json["version"]
+  puts "#{old_version} == #{new_version}"
+  if old_version.to_s == new_version.to_s
+    FileUtils.cp "#{$dir}/config/setting.json", "#{$home_dir}/config/setting.json"
   end
 
   FileUtils.cd "#{outdir}"
