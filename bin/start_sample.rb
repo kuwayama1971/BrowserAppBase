@@ -31,7 +31,7 @@ Dir.mktmpdir { |tmpdir|
   json = JSON.parse(File.read("#{dir}/lib/config/setting.json"))
   new_version = json["version"]
   puts "#{old_version} == #{new_version}"
-  if old_version.to_s == new_version.to_s
+  if old_version.to_s != new_version.to_s
     FileUtils.cp "#{dir}/lib/config/setting.json", "#{home_dir}/config/setting.json"
   end
 
