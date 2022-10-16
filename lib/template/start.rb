@@ -56,7 +56,7 @@ if ARGV[0] == "test"
   $home_dir = "./"
   ARGV = []
 else
-  $home_dir = ENV["HOME"] + "/" + dir.split("/")[-1].gsub(/-[0-9\.-]+/,"")
+  $home_dir = ENV["HOME"] + "/" + dir.split("/")[-1].gsub(/-[0-9\.-]+/,"") + "/"
 end
 puts "home_dir=#{$home_dir}"
 FileUtils.mkdir_p("#{$home_dir}/logs")
