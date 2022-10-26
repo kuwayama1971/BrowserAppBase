@@ -51,6 +51,7 @@ module BrowserAppBase
 
       puts "#{path}/bin/start_sample.rb #{dir}/bin/start_#{app_file}"
       FileUtils.cp_r "#{path}/bin/start_sample.rb", "#{dir}/bin/start_#{app_file}"
+      FileUtils.cp_r "#{path}/bin/start_sample.rb", "#{dir}/bin/start_#{app_file.gsub(/rb$/,"rbw")}"
 
       load_app = <<"EOS"
 require '#{app_file}'

@@ -26,8 +26,12 @@ Dir.mktmpdir { |tmpdir|
       FileUtils.cp_r f, "#{outdir}/"
     end
   end
+  begin
   json = JSON.parse(File.read("#{home_dir}/config/setting.json"))
   old_version = json["version"]
+  rescue
+    old_version = ""
+  end
   json = JSON.parse(File.read("#{dir}/lib/config/setting.json"))
   new_version = json["version"]
   puts "#{old_version} == #{new_version}"
