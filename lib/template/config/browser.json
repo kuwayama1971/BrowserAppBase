@@ -1,4 +1,5 @@
 {
-    "chrome_win": "start chrome",
+    "chrome_win": "start msedge",
+    "chrome_win_": "start chrome",
     "chrome_linux": "google-chrome"
 }

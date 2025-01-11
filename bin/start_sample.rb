@@ -17,7 +17,7 @@ Dir.mktmpdir { |tmpdir|
   Dir.glob("#{dir}/lib/*") do |f|
     if f =~ /config$/
       # configはhomeにコピー
-      if !File.exists? "#{home_dir}/config"
+      if !File.exist? "#{home_dir}/config"
         puts "#{f} => #{home_dir}/"
         FileUtils.cp_r f, "#{home_dir}/"
       end

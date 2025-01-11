@@ -2,7 +2,8 @@
 
 Windows and Linux browser-based desktop application templates.
 
-You need a Chrome browser to run it.
+On Linux, the Chrome browser is used by default.
+On Windows, the Edge browser is used by default.
 
 ## Installation
 
@@ -30,10 +31,10 @@ Or install it yourself as:
 
 ## Create app templat
 
-    $ create_browser_app -d ~/test/ -a MyApp
+    $ create_browser_app -d /path/to/test/ -a MyApp
 
 ## add application code
-    $ cd ~/test/
+    $ cd /path/to/test/
     $ vi my_app.rb
 
 ```ruby
@@ -59,26 +60,27 @@ ui application sample
 ## Start application
 
 ```shell
-$ /tmp/test/bin/start_my_app.rb
+$ /path/to/test/bin/start_my_app.rb
 ```
 
 ![app](img/app.png)
 
 ## browser setting
+Configure your browser for Windows or Linux.  
 
     ${home}/${app_nane}/config/browser.json
-    Set the path for your Windows or Linux Chrome browser
 
 ```json
 {
-    "chrome_win": "start chrome",
+    "chrome_win": "start msedge",
+    "chrome_win_": "start chrome",
     "chrome_linux": "/bin/google-chrome"
 }
 ```
 
 ## Send a message from your browser application to your ruby application
 
-Use the send_message function
+Use the send_message function.  
 
 main.js sample
 ```javascript
@@ -90,7 +92,7 @@ $("#exec").click(function () {
 
 ## Send a message from the ruby application to the browser application
 
-Use the app_send function
+Use the app_send function.  
 
 my_app_sample.rb sample
 ```ruby
@@ -106,64 +108,65 @@ end
 ```
 
 ## Application Setting 
+You can add settings by modifying setting.json.  
 
     ${home}/${app_nane}/config/setting.json
 
 
 ```json
-{
-  "version": 0.1,
-  "setting_list": [
-    {
-      "name": "name1",
-      "value": "value1 2 3 4",
-      "type": "input",
-      "select": "",
-      "description": "設定項目1"
-    },
-    {
-      "name": "name2",
-      "value": true,
-      "type": "checkbox",
-      "select": "",
-      "description": "有効にする場合はチェック"
-    },
-    {
-      "name": "name3",
-      "value": "3",
-      "type": "select",
-      "select": [
-        "1",
-        "2",
-        "3",
-        "4",
-        "5"
-      ],
-      "description": "選択項目"
-    },
-    {
-      "name": "name4",
-      "value": "value4",
-      "type": "input",
-      "select": "",
-      "description": "設定項目4"
-    },
-    {
-      "name": "name5",
-      "value": "value5",
-      "type": "input",
-      "select": "",
-      "description": "設定項目5"
-    },
-    {
-      "name": "name6",
-      "value": "value6",
-      "type": "input",
-      "select": "",
-      "description": "設定項目6"
-    }
-  ]
-}```
+[
+  {
+    "name": "name1",
+    "value": "value1 2 3 4",
+    "type": "input",
+    "select": "",
+    "description": "設定項目1"
+  },
+  {
+    "name": "name2",
+    "value": true,
+    "type": "checkbox",
+    "select": "",
+    "description": "有効にする場合はチェック"
+  },
+  {
+    "name": "name3",
+    "value": "2",
+    "type": "select",
+    "select": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "description": "選択項目"
+  },
+  {
+    "name": "name4",
+    "value": "value4",
+    "type": "input",
+    "select": "",
+    "description": "設定項目4"
+  },
+  {
+    "name": "name5",
+    "value": "value5",
+    "type": "input",
+    "select": "",
+    "description": "設定項目5"
+  },
+  {
+    "name": "name6",
+    "value": "value6",
+    "type": "input",
+    "select": "",
+    "description": "設定項目6"
+  }
+]
+```
+You can access the settings from your Ruby application like this:  
+
 ```ruby
 class MyApp < AppMainBase
   def start(argv)
