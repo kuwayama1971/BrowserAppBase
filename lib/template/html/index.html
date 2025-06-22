@@ -18,26 +18,25 @@
   <div id="msg_dialog" class="dialog" style="display:none;">
     <div id="msg_text">message</div>
   </div>
-  <h2 class="main-title">RubyAppBase</h2>
-  <hr>
-  <!-- menu -->
-  <div id="setting_dialog" class="dialog" style="display:none;">
-    <dl id="wrap"></dl>
-  </div>
-  <nav>
-    <ul class="menu">
-      <li><a href="#" id="exec" name="exec" class="btn primary">実行</a></li>
-      <li><a href="#" id="stop" name="stop" class="btn danger">停止</a></li>
-      <li>
-        <span class="menu-title">設定</span>
-        <ul class="menuSub">
+  <div class="main-title-row">
+    <h2 class="main-title">RubyAppBase</h2>
+    <div class="main-title-actions">
+      <a href="#" id="exec" name="exec" class="btn primary">実行</a>
+      <a href="#" id="stop" name="stop" class="btn danger">停止</a>
+      <div class="btn primary menu-title" style="position:relative;">
+        設定
+        <ul class="menuSub" style="right:0; left:auto; min-width:120px;">
           <li><a href="#" id="setting">設定</a></li>
           <li><a href="#" id="save_setting">設定保存</a></li>
           <li><a href="#" id="load_setting">設定読み込み</a></li>
         </ul>
-      </li>
-    </ul>
-  </nav>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div id="setting_dialog" class="dialog" style="display:none;">
+    <dl id="wrap"></dl>
+  </div>
 
   <section class="input-section">
     <div id="dialog1" class="dialog" style="display:none;">

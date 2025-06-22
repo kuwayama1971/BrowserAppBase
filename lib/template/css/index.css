@@ -1,3 +1,12 @@
+:root {
+    --main-bg: #f6fbff;
+    --main-color: #424242;
+    --btn-shadow: 0 2px 8px rgba(60, 60, 60, 0.11);
+    --btn-gradient: linear-gradient(90deg, #eaf6f9 0%, #61afe7 100%);
+    --btn-gradient-accent: linear-gradient(90deg, #eaf6f9 0%, #61afe7 100%);
+    --btn-gradient-danger: linear-gradient(90deg, #eaf6f9 0%, #f1f1c7 100%);
+}
+
 body {
     font-family: 'Roboto', Arial, sans-serif;
     background: linear-gradient(135deg, #e3f0fc 0%, #b6d6f6 100%);
@@ -6,6 +15,106 @@ body {
     padding: 0;
     color: #234067;
     font-size: 13px;
+}
+
+.main-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    gap: 18px;
+}
+
+.main-title {
+    color: #234067;
+    font-size: 1.2rem;
+    letter-spacing: 0.01em;
+    margin: 0;
+    flex-shrink: 0;
+    margin-left: 10px;
+}
+
+.main-title-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.main-title-actions .btn {
+    font-size: 13px;
+    padding: 7px 16px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.main-title-actions .menu-title {
+    position: relative;
+    user-select: none;
+}
+
+.main-title-actions .menuSub {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: auto;
+    background: #f6fbff;
+    box-shadow: 0 1px 5px #b6d6f6;
+    border-radius: 0 0 5px 5px;
+    min-width: 120px;
+    z-index: 100;
+    padding: 0;
+    margin: 0;
+}
+
+.main-title-actions .menu-title:hover .menuSub,
+.main-title-actions .menu-title:focus-within .menuSub {
+    display: block;
+}
+
+.main-title-actions .menuSub li a {
+    color: #3b5c7e;
+    padding: 7px 15px;
+    display: block;
+    border-bottom: 1px solid #e3f0fc;
+    transition: color 0.2s, background 0.2s;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.main-title-actions .menuSub li:last-child a {
+    border-bottom: none;
+}
+
+.main-title-actions .menuSub li a:hover {
+    background: #d2e8f7;
+    color: #234067;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #b6d6f6;
+    margin: 6px 0 14px 0;
+    width: 60%;
+}
+
+.btn.primary {
+    background: var(--btn-gradient);
+    border-bottom: 3px solid #333;
+}
+
+.btn.primary:hover {
+    background: #212121;
+    color: #fff;
+}
+
+.btn.danger {
+    background: var(--btn-gradient-danger);
+    border-bottom: 3px solid #c62828;
+}
+
+.btn.danger:hover {
+    background: #b71c1c;
+    color: #fff;
 }
 
 .app-header {
@@ -167,40 +276,6 @@ body {
     box-shadow: 0 1px 8px #b6d6f6cc;
 }
 
-/* Log Output */
-.outarea {
-    background: #f6fbff;
-    border-radius: 7px;
-    min-height: 200px;
-    width: 95vw;
-    height: 75vh;
-    max-width: 95vw;
-    max-height: 90vh;
-    box-shadow: 0 1px 8px #b6d6f677;
-    margin-top: 4px;
-    color: #b0bec5;
-    overflow-y: auto;
-    font-size: 12px;
-    margin-left: 1px;
-    margin-right: 1px;
-    display: block;
-    padding: 1px 1px;
-
-}
-
-ul.log {
-    margin: 0;
-    padding-left: 0.5px;
-    font-size: 13px;
-    color: #539ad9;
-    letter-spacing: 0.1px;
-    padding: 0.5px 0.5px;
-}
-
-ul.log li {
-    margin-bottom: 0.3em;
-}
-
 /* Dialog Styling Overrides */
 .ui-dialog {
     background: #e5f2fb;
@@ -341,14 +416,70 @@ ul.log li {
 }
 
 #dialog1 #search_str {
-    width: 100%;
-    box-sizing: border-box;
-    min-width: 120px;
+    width: 80vw;
+    min-width: 400px;
     max-width: 100%;
+    box-sizing: border-box;
 }
 
 #dialog2 #search_str2 {
-    width: 100%;
-    box-sizing: border-box;
-    min-width: 120px;
+    width: 80vw;
+    min-width: 400px;
     max-width: 100%;
+    box-sizing: border-box;
+}
+
+.inarea {
+    /* font-size: 1.13rem; */
+    padding: 3px 3px;
+    border: 1.5px soslid #bbb;
+    border-radius: var(--border-radius);
+    width: 85vw;
+    max-width: 100vw;
+    min-width: 50vw;
+    box-sizing: border-box;
+    background: #fafafa;
+    outline: none;
+    display: block;
+    margin-left: 10px;
+
+}
+
+.inarea:focus {
+    border-color: var(--main-color);
+    background: #fff;
+}
+
+/* Log Output */
+.outarea {
+    background: #f6fbff;
+    border-radius: 7px;
+    min-height: 200px;
+    width: 98vw;
+    height: 85vh;
+    max-width: 100vw;
+    max-height: 100vh;
+    box-shadow: 1px 1px 1px #b6d6f677;
+    margin-top: 4px;
+    color: #b0bec5;
+    overflow-y: auto;
+    font-size: 12px;
+    margin-left: 10px;
+    margin-right: 1px;
+    display: block;
+    padding: 3px 1px;
+
+}
+
+ul.log {
+    margin: 0;
+    padding-left: 0.5px;
+    font-size: 13px;
+    color: #539ad9;
+    letter-spacing: 0.1px;
+    padding: 0.5px 0.5px;
+}
+
+ul.log li {
+    margin-bottom: 0.3em;
+}

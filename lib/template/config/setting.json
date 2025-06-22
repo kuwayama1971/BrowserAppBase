@@ -53,11 +53,11 @@
       "name": "jaon_area",
       "value": {
         "DEBUG": true,
-        "DEBUG_PRINT2": true
+        "VERSION": 1
       },
       "type": "textarea",
       "select": "",
-      "description": "定義するdefineのリスト<br>例:<br>{<br>  \"DEBUG\":true <br>  \"VERSION\":1<br>}"
+      "description": "Json文字列<br>例:<br>{<br>  \"DEBUG\":true <br>  \"VERSION\":1<br>}"
     }
   ]
 }
