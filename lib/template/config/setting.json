@@ -48,6 +48,16 @@
       "type": "input",
       "select": "",
       "description": "設定項目6"
+    },
+    {
+      "name": "jaon_area",
+      "value": {
+        "DEBUG": true,
+        "DEBUG_PRINT2": true
+      },
+      "type": "textarea",
+      "select": "",
+      "description": "定義するdefineのリスト<br>例:<br>{<br>  \"DEBUG\":true <br>  \"VERSION\":1<br>}"
     }
   ]
 }
