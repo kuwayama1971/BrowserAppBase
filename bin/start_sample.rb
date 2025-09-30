@@ -9,7 +9,7 @@ require "json"
 dir = File.dirname(File.expand_path(__FILE__ + "/../"))
 home_dir = ENV["HOME"] + "/" + dir.split("/")[-1].gsub(/-[0-9\.-]+/,"")
 puts "home_dir=#{home_dir}"
-Dir.mktmpdir { |tmpdir|
+Dir.mktmpdir do |tmpdir|
   outdir = tmpdir + "/" + dir.split("/")[-1]
   FileUtils.mkdir_p outdir
   FileUtils.mkdir_p home_dir
@@ -27,8 +27,8 @@ Dir.mktmpdir { |tmpdir|
     end
   end
   begin
-  json = JSON.parse(File.read("#{home_dir}/config/setting.json"))
-  old_version = json["version"]
+    json = JSON.parse(File.read("#{home_dir}/config/setting.json"))
+    old_version = json["version"]
   rescue
     old_version = ""
   end
@@ -39,14 +39,14 @@ Dir.mktmpdir { |tmpdir|
     FileUtils.cp "#{dir}/lib/config/setting.json", "#{home_dir}/config/setting.json"
   end
 
-  FileUtils.cd "#{outdir}"
+  FileUtils.cd outdir
   kernel = Facter.value(:kernel)
-  if kernel == "windows"
+  if kernel.downcase == "windows"
     system "rubyw ./start.rb"
-  elsif kernel == "Linux"
+  elsif kernel.downcase == "linux"
     system "ruby ./start.rb"
   else
     system "ruby ./start.rb"
   end
   FileUtils.cd ENV["HOME"]
-}
+end

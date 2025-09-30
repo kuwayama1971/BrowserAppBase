@@ -11,8 +11,8 @@ class MyApp < AppMainBase
         yield v if block_given?
       end
 
-      # Browserにメッセージ送信
-      app_send("popup:start app #{argv[0]}")
+      # Browserにメッセージ送信(3秒表示)
+      app_send("popup:3000:start app #{argv[0]}")
 
       # 履歴の保存
       add_history("history.json", argv[0])

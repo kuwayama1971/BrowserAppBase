@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
+require "json"
+
 class AppMainBase
   def initialize
     @config = nil
-    @aboet = false
+    @abort = false
     @exec = false
     @suspend = false
     @ws = nil
   end
 
   def app_send(str)
-    if @ws != nil
-      @ws.send(str)
-    end
+    @ws&.send(str)
   end
 
   def set_ws(ws)
@@ -26,38 +26,35 @@ class AppMainBase
     @exec = true
   end
 
-  def stop()
+  def stop
     @abort = true
     @exec = false
   end
 
-  def suspend()
+  def suspend
     @suspend = true
   end
 
-  def resume()
+  def resume
     @suspend = false
   end
 
   # 履歴の保存
   def add_history(file, history_data, max = 10)
+    history_dir = @config&.fetch(:home_dir, "./") + "history/"
+    path = File.join(history_dir, file)
     begin
-      buf = File.read "#{$home_dir}history/#{file}"
+      buf = File.read(path)
+      data = JSON.parse(buf)
     rescue
-      buf = ""
-    end
-    data = eval(buf)
-    if data == nil
       data = []
     end
     if history_data.to_s != ""
-      data.prepend history_data
+      data.unshift(history_data)
     end
-    data = data.uniq[0..max - 1]
-    File.open("#{$home_dir}history/#{file}", "w") do |f|
-      f.write JSON.pretty_generate data
-    end
+    data = data.uniq[0, max]
+    File.write(path, JSON.pretty_generate(data))
   end
 end
 
-require "app_load.rb"
+require_relative "app_load"
