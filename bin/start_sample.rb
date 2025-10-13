@@ -1,13 +1,15 @@
 #!/usr/bin/env ruby
+# -*- coding: utf-8 -*-
+$LOAD_PATH << File.dirname(File.expand_path(__FILE__))
 
 require "fileutils"
-require "facter"
 require "tmpdir"
 require "json"
+require "common"
 
 # tmpdirディレクトリにコピー
 dir = File.dirname(File.expand_path(__FILE__ + "/../"))
-home_dir = ENV["HOME"] + "/" + dir.split("/")[-1].gsub(/-[0-9\.-]+/,"")
+home_dir = ENV["HOME"] + "/" + dir.split("/")[-1].gsub(/-[0-9\.-]+/, "")
 puts "home_dir=#{home_dir}"
 Dir.mktmpdir do |tmpdir|
   outdir = tmpdir + "/" + dir.split("/")[-1]
@@ -40,7 +42,7 @@ Dir.mktmpdir do |tmpdir|
   end
 
   FileUtils.cd outdir
-  kernel = Facter.value(:kernel)
+  kernel = get_os_type
   if kernel.downcase == "windows"
     system "rubyw ./start.rb"
   elsif kernel.downcase == "linux"

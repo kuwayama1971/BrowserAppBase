@@ -1,4 +1,5 @@
 [
+  "/home/kuwayama/test_app/logs/app.log",
   "/tmp",
   "/home/kuwayama/tool/github/BrowserAppBase",
   "/home/kuwayama/.bashrc",
@@ -7,6 +8,5 @@
   "/home/kuwayama/.config/vlc/vlcrc",
   "/home/kuwayama/tool/docker/android/work/A13/tools/test",
   "/home/kuwayama/tool/github/RubyUmlClass/Gemfile",
-  "/home/kuwayama/tool/github/BrowserAppBase/lib/template/logs",
-  "/home/kuwayama/tool/ruby/Gemfile"
+  "/home/kuwayama/tool/github/BrowserAppBase/lib/template/logs"
 ]

@@ -8,7 +8,7 @@ require "daemons"
 require "fileutils"
 require "kconv"
 require "json"
-require "facter"
+require "common"
 
 # ログ出力
 module Output
@@ -56,7 +56,7 @@ if ARGV[0] == "test"
   $home_dir = "./"
   ARGV.clear
 else
-  $home_dir = ENV["HOME"] + "/" + dir.split("/")[-1].gsub(/-[0-9\.-]+/,"") + "/"
+  $home_dir = ENV["HOME"] + "/" + dir.split("/")[-1].gsub(/-[0-9\.-]+/, "") + "/"
 end
 puts "home_dir=#{$home_dir}"
 FileUtils.mkdir_p("#{$home_dir}/logs")
@@ -108,7 +108,7 @@ begin
     json_file = "#{$home_dir}/config/browser.json"
     json = JSON.parse(File.read json_file)
     puts json
-    kernel = Facter.value(:kernel)
+    kernel = get_os_type
     if kernel.downcase == "windows"
       browser = json["chrome_win"]
     elsif kernel.downcase == "linux"

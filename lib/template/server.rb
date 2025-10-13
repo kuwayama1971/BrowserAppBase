@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+$LOAD_PATH << File.dirname(File.expand_path(__FILE__))
+
 require "sinatra"
 require "sinatra/contrib"
 require "sinatra-websocket"
@@ -6,7 +9,7 @@ require "json"
 require "kconv"
 require "cgi"
 require "pathname"
-require "facter"
+require "common"
 
 class Search < Sinatra::Base
   helpers Sinatra::Streaming
@@ -39,7 +42,7 @@ class Search < Sinatra::Base
     puts "dir=#{dir}"
     puts "file=#{file}"
 
-    kernel = Facter.value(:kernel)
+    kernel = get_os_type
     if kernel.downcase == "windows"
       dir = "c:/" if dir.nil? || dir == "/"
     elsif kernel.downcase == "linux"
