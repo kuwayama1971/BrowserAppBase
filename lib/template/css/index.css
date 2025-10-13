@@ -432,7 +432,7 @@ hr {
 .inarea {
     /* font-size: 1.13rem; */
     padding: 3px 3px;
-    border: 1.5px soslid #bbb;
+    border: 1.5px solid #bbb;
     border-radius: var(--border-radius);
     width: 85vw;
     max-width: 100vw;

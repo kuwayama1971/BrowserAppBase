@@ -8,7 +8,7 @@ require "daemons"
 require "fileutils"
 require "kconv"
 require "json"
-require "facter"
+require "common"
 
 # ログ出力
 module Output
@@ -24,7 +24,7 @@ module Output
       alias_method :write_org, :write
 
       def initialize(stdout)
-        @stdout = false
+        @stdout = stdout
       end
 
       attr_accessor :stdout
@@ -54,9 +54,9 @@ FileUtils.cd dir
 pp ARGV
 if ARGV[0] == "test"
   $home_dir = "./"
-  ARGV = []
+  ARGV.clear
 else
-  $home_dir = ENV["HOME"] + "/" + dir.split("/")[-1].gsub(/-[0-9\.-]+/,"") + "/"
+  $home_dir = ENV["HOME"] + "/" + dir.split("/")[-1].gsub(/-[0-9\.-]+/, "") + "/"
 end
 puts "home_dir=#{$home_dir}"
 FileUtils.mkdir_p("#{$home_dir}/logs")
@@ -85,7 +85,7 @@ buf = File.binread("js/main.js").toutf8
 buf.gsub!(/localhost:[0-9]+\//, "localhost:#{port}/")
 File.binwrite("js/main.js", buf)
 
-# index.htaの編集
+# index.htmlの編集
 buf = File.binread("html/index.html").toutf8
 buf.gsub!(/localhost:[0-9]+\//, "localhost:#{port}/")
 File.binwrite("html/index.html", buf)
@@ -108,10 +108,10 @@ begin
     json_file = "#{$home_dir}/config/browser.json"
     json = JSON.parse(File.read json_file)
     puts json
-    kernel = Facter.value(:kernel)
-    if kernel == "windows"
+    kernel = get_os_type
+    if kernel.downcase == "windows"
       browser = json["chrome_win"]
-    elsif kernel == "Linux"
+    elsif kernel.downcase == "linux"
       browser = json["chrome_linux"]
     else
       browser = json["chrome_win"]

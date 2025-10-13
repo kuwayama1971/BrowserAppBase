@@ -8,29 +8,32 @@ require "json"
 require "./server"
 require "./wsserver"
 
+base_dir = File.dirname(File.expand_path(__FILE__))
+
 access_log = File.new("#{$home_dir}/logs/sinatra.log", "a+")
 access_log.sync = true
 use Rack::CommonLogger, access_log
 
 get "/" do
-  File.read("html/index.html")
+  puts "base_dir=#{base_dir}"
+  File.read("#{base_dir}/html/index.html")
 end
 
 get "*.html" do |file|
   content_type "text/html", :charset => "utf-8"
-  File.read "./html/#{file}.html"
+  File.read "#{base_dir}//html/#{file}.html"
 end
 
 get "/css/:name.css" do
   content_type "text/css", :charset => "utf-8"
-  puts "css/#{params[:name]}.css"
-  File.read "css/#{params[:name]}.css"
+  puts "#{base_dir}/css/#{params[:name]}.css"
+  File.read "#{base_dir}/css/#{params[:name]}.css"
 end
 
 get "/js/:name.js" do
   content_type "text/javascript", :charset => "utf-8"
-  puts "js/#{params[:name]}.js"
-  File.read "js/#{params[:name]}.js"
+  puts "#{base_dir}/js/#{params[:name]}.js"
+  File.read "#{base_dir}/js/#{params[:name]}.js"
 end
 
 get "/config/*.*" do |file, ext|
@@ -102,6 +105,6 @@ configure do
 
 end
 
-#\ --port 34921
+#\ --port 45739
 
 run Sinatra::Application

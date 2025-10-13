@@ -6,17 +6,17 @@ require "optparse"
 
 opt = OptionParser.new
 o = {}
-opt.on("-d dir_name", "--dir dir_name", "application directory") { |v| o[:dir] = v }
-opt.on("-a app_name", "--app app_name", "application name") { |v| o[:app] = v }
+opt.on("-d DIR_NAME", "--dir DIR_NAME", "application directory") { |v| o[:dir] = v }
+opt.on("-a APP_NAME", "--app APP_NAME", "application name") { |v| o[:app] = v }
 opt.on("-h", "--help", "command help") { puts opt; exit }
 begin
   opt.parse!(ARGV)
-rescue
+rescue OptionParser::InvalidOption, OptionParser::MissingArgument
   puts opt
   exit
 end
 
-if o[:dir] == nil
+if o[:dir].nil? || o[:dir].strip.empty?
   puts opt
   exit
 end

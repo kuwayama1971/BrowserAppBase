@@ -35,7 +35,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "sinatra-websocket"
   spec.add_dependency "thin"
   spec.add_dependency "json"
-  spec.add_dependency "facter"
 
   # For more information and examples about making a new gem, checkout our
   # guide at: https://bundler.io/guides/creating_gem.html

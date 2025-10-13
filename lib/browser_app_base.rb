@@ -21,8 +21,8 @@ module BrowserAppBase
 
   def self.get_app_name(app)
     app_name = ""
-    app.each_char do |s|
-      if s =~ /[a-z]/ and app_name.size == 0
+    app.each_char.with_index do |s, i|
+      if s =~ /[a-z]/ && app_name.size == 0
         app_name += s.upcase
       else
         app_name += s
@@ -37,8 +37,8 @@ module BrowserAppBase
     puts "create application base #{dir}"
 
     FileUtils.mkdir_p dir
-    FileUtils.mkdir_p dir + "/lib/"
-    FileUtils.mkdir_p dir + "/bin/"
+    FileUtils.mkdir_p "#{dir}/lib/"
+    FileUtils.mkdir_p "#{dir}/bin/"
 
     path = File.dirname(File.expand_path(__FILE__)) + "/../"
     Dir.glob("#{path}/lib/template/*") do |f|
@@ -51,7 +51,7 @@ module BrowserAppBase
 
       puts "#{path}/bin/start_sample.rb #{dir}/bin/start_#{app_file}"
       FileUtils.cp_r "#{path}/bin/start_sample.rb", "#{dir}/bin/start_#{app_file}"
-      FileUtils.cp_r "#{path}/bin/start_sample.rb", "#{dir}/bin/start_#{app_file.gsub(/rb$/,"rbw")}"
+      FileUtils.cp_r "#{path}/bin/start_sample.rb", "#{dir}/bin/start_#{app_file.gsub(/rb$/, "rbw")}"
 
       load_app = <<"EOS"
 require '#{app_file}'
@@ -64,9 +64,14 @@ EOS
 
       puts "create #{app_file}"
       new_file = "#{dir}/lib/#{app_file}"
-      FileUtils.cp("#{dir}/lib/my_app_sample.rb", new_file)
-      buf = File.binread(new_file)
-      File.binwrite(new_file, buf.gsub(/MyApp/, get_app_name(app)))
+      sample_file = "#{dir}/lib/my_app_sample.rb"
+      if File.exist?(sample_file)
+        FileUtils.cp(sample_file, new_file)
+        buf = File.binread(new_file)
+        File.binwrite(new_file, buf.gsub(/MyApp/, get_app_name(app)))
+      else
+        warn "Sample file #{sample_file} does not exist. Skipping app file creation."
+      end
     end
   end
 end
