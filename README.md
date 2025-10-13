@@ -18,7 +18,7 @@ On Windows, the Edge browser is used by default.
 
 ---
 
-[Latest Changes]
+## Latest Changes
 - Added common.rb
 - Modified behavior so that the settings dialog does not close when there is an error in the JSON string
 - Additional bug fixes and unit tests adde
