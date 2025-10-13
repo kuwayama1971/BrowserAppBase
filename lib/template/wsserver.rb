@@ -32,6 +32,8 @@ class WsServer < Sinatra::Base
     end
   end
 
+  public :ws_send
+
   get "" do
     if !request.websocket?
       "no supported"

@@ -1,4 +1,6 @@
 [
+  "/tmp",
+  "/home/kuwayama/tool/github/BrowserAppBase",
   "/home/kuwayama/.bashrc",
   "/home/kuwayama/tool/github/BrowserAppBase/Gemfile",
   "/home/kuwayama/lib/logs",
@@ -6,6 +8,5 @@
   "/home/kuwayama/tool/docker/android/work/A13/tools/test",
   "/home/kuwayama/tool/github/RubyUmlClass/Gemfile",
   "/home/kuwayama/tool/github/BrowserAppBase/lib/template/logs",
-  "/home/kuwayama/tool/ruby/Gemfile",
-  "/home/kuwayama"
+  "/home/kuwayama/tool/ruby/Gemfile"
 ]
