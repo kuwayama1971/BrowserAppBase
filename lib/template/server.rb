@@ -58,7 +58,7 @@ class Search < Sinatra::Base
       path = path + "*"
     end
     path.gsub!(/[\/]+/, "/")
-    puts path
+    puts "path=#{path}"
     Dir.glob(path, File::FNM_DOTMATCH).each do |file|
       data = {}
       next if File.basename(file) == "."

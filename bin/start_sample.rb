@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 # -*- coding: utf-8 -*-
-$LOAD_PATH << File.dirname(File.expand_path(__FILE__))
-
+$LOAD_PATH << File.dirname(File.expand_path(__FILE__)).gsub(/bin$/, "lib")
 require "fileutils"
 require "tmpdir"
 require "json"
