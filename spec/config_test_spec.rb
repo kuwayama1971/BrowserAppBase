@@ -6,8 +6,17 @@ RSpec.describe "Sinatra Application (config.ru)" do
 
   def app
     # config.ruをRack::Builderでパースしてアプリとして返す
-    Rack::Builder.parse_file(File.expand_path("../lib/template/config.ru", __dir__)).first
+    # Rack 3 ではRack::Builder.parse_fileがアプリを直接返す
+    app_from_config = Rack::Builder.parse_file(File.expand_path("../lib/template/config.ru", __dir__))
+    inner_app = app_from_config.is_a?(Array) ? app_from_config.first : app_from_config
+    inner_app
   end
+
+  before(:each) do
+    # For Rack 3 / Sinatra, we must bypass HostAuthorization in Rack::Test
+    ENV['RACK_ENV'] = 'test'
+  end
+
 
   before(:all) do
     Dir.chdir("lib/template/")

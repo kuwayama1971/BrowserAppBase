@@ -75,10 +75,7 @@ end
 port = get_unused_port
 puts "port=#{port}"
 
-# config.ruの編集
-buf = File.binread("config.ru").toutf8
-buf.gsub!(/port [0-9]+/, "port #{port}")
-File.binwrite("config.ru", buf)
+# config.ruの編集は不要(port引数で渡すように変更)
 
 # main.jsの編集
 buf = File.binread("js/main.js").toutf8
@@ -122,7 +119,12 @@ begin
   }
 
   # start web server
-  Rack::Server.start
+  if Rack.release >= "3"
+    require "rackup"
+    Rackup::Server.start(:Port => port, :config => "config.ru", :server => "thin")
+  else
+    Rack::Server.start(:Port => port, :config => "config.ru", :server => "thin")
+  end
 rescue
   puts $!
   puts $@

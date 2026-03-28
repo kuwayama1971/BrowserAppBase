@@ -288,6 +288,30 @@ This image displays the detailed setting screen, allowing you to edit individual
 
 ---
 
+## Docker Test Environment
+
+A Docker-based test environment is available for testing the application on Ubuntu.
+This setup uses X11 forwarding to display the browser window on your host machine.
+
+```shell
+$ cd test/docker/ubuntu
+$ docker-compose up -d
+$ docker exec -it ubuntu bash
+```
+
+For Ubuntu 24.04:
+```shell
+$ docker-compose -f docker-compose-24.04.yml up -d
+```
+
+Inside the container:
+```shell
+$ cd /work
+$ rake
+```
+
+---
+
 ## Running Tests
 
 From v0.1.9, RSpec-based testing is supported.  
@@ -301,7 +325,7 @@ bundle exec rake
 or
 
 ```sh
-bundle exec rspec
+RACK_ENV=test bundle exec rspec
 ```
 
 RSpec tasks are defined in the `Rakefile`, so `rake` will automatically run all tests.  

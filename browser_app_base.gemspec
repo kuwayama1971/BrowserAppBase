@@ -30,6 +30,8 @@ Gem::Specification.new do |spec|
 
   # Uncomment to register a new dependency of your gem
   # spec.add_dependency "example-gem", "~> 1.0"
+  spec.add_dependency "rack", ">= 3.0"
+  spec.add_dependency "rackup"
   spec.add_dependency "sinatra"
   spec.add_dependency "sinatra-contrib"
   spec.add_dependency "sinatra-websocket"
