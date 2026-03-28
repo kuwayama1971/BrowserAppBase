@@ -19,9 +19,9 @@ On Windows, the Edge browser is used by default.
 ---
 
 ## Latest Changes
-- Added common.rb
-- Modified behavior so that the settings dialog does not close when there is an error in the JSON string
-- Additional bug fixes and unit tests adde
+- Added support for Rack 3
+- Added ruby-lsp environment
+- Added Docker test environment for Ubuntu
 
 ---
 
