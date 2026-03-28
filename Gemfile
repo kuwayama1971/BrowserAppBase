@@ -5,12 +5,9 @@ source "https://rubygems.org"
 # Specify your gem's dependencies in browser_app_base.gemspec
 gemspec
 
-gem "rack", "~> 2.2"
-
+gem "rack", ">= 3.0"
+gem "rackup"
 gem "rake", "~> 13.0"
-
 gem "rspec", ">= 0"
-
 gem "rack-test"
-
 gem "sinatra"

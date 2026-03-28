@@ -41,7 +41,8 @@ class AppMainBase
 
   # 履歴の保存
   def add_history(file, history_data, max = 10)
-    history_dir = @config&.fetch(:home_dir, "./") + "history/"
+    home_dir = @config&.key?(:home_dir) ? @config[:home_dir] : ($home_dir || "./")
+    history_dir = home_dir + "history/"
     path = File.join(history_dir, file)
     begin
       buf = File.read(path)

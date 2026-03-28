@@ -45,8 +45,8 @@ RSpec.describe WsServer do
   # WebSocket通信のテストはRack::Testでは困難なため、ここではルーティングの基本動作のみ確認
   describe "GET ''" do
     it "returns 'no supported' if not websocket" do
-      get ""
-      expect(last_response.body).to include("html")
+      get "/", {}, { "PATH_INFO" => "" }
+      expect(last_response.body).to include("no supported")
     end
   end
 end
