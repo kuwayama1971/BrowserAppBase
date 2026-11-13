@@ -22,6 +22,7 @@ On Windows, the Edge browser is used by default.
 - Added support for Rack 3
 - Added ruby-lsp environment
 - Added Docker test environment for Ubuntu
+- **Added multi-instance startup support**: Each app instance now uses a dynamically assigned port, allowing multiple apps to run simultaneously. The browser automatically connects via WebSocket using the correct port.
 
 ---
 
@@ -92,6 +93,14 @@ end
 ```shell
 $ /path/to/test/bin/start_my_app.rb
 ```
+
+### Multiple instances support (multi-port mode)
+
+Starting from this version, each application instance automatically uses a dynamically assigned unused port. This allows you to run multiple application instances simultaneously without port conflicts. The browser automatically connects via WebSocket using the correct port embedded in `index.html`.
+
+- Port number is saved to `config/port.txt`
+- WebSocket connection uses the same dynamic port (`SERVER_PORT` variable)
+- Test mode: `./start_my_app.rb test` also uses the dynamic port (no longer hardcoded to 9292)
 
 ![app](img/app.png)
 
@@ -285,6 +294,32 @@ The following image shows the application's setting menu, where you can access a
 Setting screen  
 This image displays the detailed setting screen, allowing you to edit individual configuration items.  
 ![app](img/setting.png)
+
+---
+
+## Testing Ruby Version Switching with rbenv
+
+You can use rbenv to install different Ruby versions and verify that the application works correctly with each version.
+
+```shell
+# Set up rbenv (if not installed)
+$ git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+$ echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
+$ eval "$(~/.rbenv/bin/rbenv init -)"
+
+# Install a Ruby version to test (e.g., 3.1.0)
+$ rbenv install 3.1.0
+$ rbenv global 3.1.0
+$ ruby -v  # Confirm the version
+
+# Run your application
+$ cd /path/to/test_app/
+$ ./bin/start_my_app.rb
+```
+
+**Note:**
+- Install `bundler` and required gems for each Ruby version
+- In rbenv environment, run `$ rbenv rehash` to update bin directory
 
 ---
 

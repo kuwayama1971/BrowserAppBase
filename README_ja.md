@@ -22,6 +22,7 @@ WindowsではデフォルトでEdgeブラウザが使用されます。
 - Rack 3 をサポートしました
 - ruby-lspの環境を追加しました
 - Ubuntu用のDockerテスト環境を追加しました
+- **マルチインスタンス起動対応**: 各アプリインスタンスは動的に割り当されたポートを自動的に使用するため、複数のアプリを同時に実行できるようになりました。ブラウザは埋め込まれた正しいポート経由でWebSocket接続します。
 
 ---
 
@@ -92,6 +93,14 @@ end
 ```shell
 $ /path/to/test/bin/start_my_app.rb
 ```
+
+### マルチインスタンス対応（動的ポートモード）
+
+このバージョン以降、各アプリケーションインスタンスは自動的に割り当てられた未使用ポートを使用します。これにより、ポート競合なく複数のアプリケーションインスタンスを同時に実行できます。ブラウザは `index.html` に埋め込まれた正しいポート経由でWebSocket接続します。
+
+- ポート番号は `config/port.txt` に保存されます
+- WebSocket接続も同じ動的ポートを使用（`SERVER_PORT`変数）
+- テストモード: `./start_my_app.rb test` も動的ポートを使用（9292に固定されなくなりました）
 
 ![app](img/app.png)
 
@@ -252,7 +261,7 @@ end
 - アプリケーションは必要に応じてこのデータを解析して使用できます。
 
 **使用例：**
-- デバッグモードの切り替え (`"DEBUG": true`)
+- デバッグモードの切り替え（`"DEBUG": true`）
 - バージョンや環境情報の保存
 - 高度な設定のための任意のキーバリューペアの保存
 
@@ -285,6 +294,32 @@ end
 設定画面
 この画像は詳細な設定画面を表示しており、個々の設定項目を編集できます。
 ![app](img/setting.png)
+
+---
+
+## rbenv を使った Ruby バージョン切替テスト
+
+rbenv で異なる Ruby バージョンをインストールし、アプリケーションが各バージョンで正常に動作するか確認できます。
+
+```shell
+# rbenv のセットアップ（未インストールの場合）
+$ git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+$ echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
+$ eval "$(~/.rbenv/bin/rbenv init -)"
+
+# テストしたいRubyバージョンをインストール（例: 3.1.0）
+$ rbenv install 3.1.0
+$ rbenv global 3.1.0
+$ ruby -v  # バージョン確認
+
+# アプリケーションを実行
+$ cd /path/to/test_app/
+$ ./bin/start_my_app.rb
+```
+
+**注意点:**
+- 各Rubyバージョンで `bundler` と必要なgemをインストールしてください
+- rbenv環境では `$ rbenv rehash` を実行し、binディレクトリを更新してください
 
 ---
 
