@@ -2,6 +2,9 @@
 # -*- coding: utf-8 -*-
 $LOAD_PATH << File.dirname(File.expand_path(__FILE__))
 
+require "bundler/setup"
+Bundler.require
+
 require "socket"
 require "rack"
 require "daemons"
@@ -63,32 +66,42 @@ FileUtils.mkdir_p("#{$home_dir}/logs")
 FileUtils.mkdir_p("#{$home_dir}/history")
 Output.console_and_file("#{$home_dir}/logs/app.log", true)
 
-# 空きポートを取得
+# 空きポートを取得（TCPServerを開放することで未使用ポートを確保）
 def get_unused_port
-  s = TCPServer.open(0)
-  port = s.addr[1]
-  s.close
+  server = TCPServer.new("localhost", 0)
+  port = server.addr[1]
+  server.close
   return port
 end
 
-# 空きポートを取得
+# ポート番号を書き出し（後続処理用）
 port = get_unused_port
 puts "port=#{port}"
+File.write("config/port.txt", "#{port}\n")
 
-# config.ruの編集は不要(port引数で渡すように変更)
+# index.htmlにポート番号を埋め込む（既存の埋め込みを削除してから挿入）
+html_buf = File.binread("html/index.html").toutf8
+# 既存の <script>\nvar SERVER_PORT=...; </script> を削除
+html_buf.gsub!(/<script>\s*\n\s*var SERVER_PORT=\d+;\s*\n\s*<\/script>/, "")
 
-# main.jsの編集
+# <head> タグの直後にポート番号スクリプトを挿入（</head> の前に追加）
+script_tag = "<script>\nvar SERVER_PORT=#{port};\n</script>"
+head_close_pos = html_buf.index("</head>")
+if head_close_pos
+  # </head> の前に挿入
+  pre = html_buf[0...head_close_pos]
+  post = html_buf[head_close_pos..-1]
+  html_buf = pre + "\n    " + script_tag + "\n" + post
+end
+File.binwrite("html/index.html", html_buf)
+
+# main.jsのポート番号置換を無効化（動的読み込みに変更）
 buf = File.binread("js/main.js").toutf8
-buf.gsub!(/localhost:[0-9]+\//, "localhost:#{port}/")
 File.binwrite("js/main.js", buf)
 
-# index.htmlの編集
-buf = File.binread("html/index.html").toutf8
-buf.gsub!(/localhost:[0-9]+\//, "localhost:#{port}/")
-File.binwrite("html/index.html", buf)
-
 begin
-  Thread.start {
+  # ブラウザ起動スレッド
+  browser_thread = Thread.start {
     puts "wait start web server"
     while true
       begin
@@ -96,7 +109,6 @@ begin
         s.close
         break
       rescue
-        puts $!
         sleep 0.1
       end
     end
@@ -119,12 +131,9 @@ begin
   }
 
   # start web server
-  if Rack.release >= "3"
-    require "rackup"
-    Rackup::Server.start(:Port => port, :config => "config.ru", :server => "thin")
-  else
-    Rack::Server.start(:Port => port, :config => "config.ru", :server => "thin")
-  end
+  require "rackup"
+  require "puma"
+  Rackup::Server.start(:Port => port, :config => "config.ru")
 rescue
   puts $!
   puts $@

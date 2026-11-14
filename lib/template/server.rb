@@ -3,8 +3,6 @@ $LOAD_PATH << File.dirname(File.expand_path(__FILE__))
 
 require "sinatra"
 require "sinatra/contrib"
-require "sinatra-websocket"
-require "thin"
 require "json"
 require "kconv"
 require "cgi"
